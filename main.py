@@ -2,7 +2,6 @@ from players import Player
 from players import *
 from presenters import BasePresenter
 from presenters import *
-
 from random import choice as choose
 
 COLOURS = ["r", "o", "y", "g", "b"]
@@ -111,18 +110,28 @@ if __name__ == "__main__":
 
     playerclasses = [Player] + Player.__subclasses__()
 
-    players = []
-
     presenter = TPresenter.TPresenter("black")
 
-    for player in playerclasses:
-        players.append(player(player.__name__,
-                        choose(list(presenter.TCOLOURS.keys())),
-                        TPresenter.TPresenter))
+    try:
+        players = []
+        # for player in playerclasses:
+        #     players += [player(player.__name__,
+        #                  choose(list(presenter.TCOLOURS.keys())),
+        #                  TPresenter.TPresenter)]
 
-    referee = Referee(COLOURS, 4, 9, 2*players[1:])
 
-    while True:
-        referee.game()
-        if input("Play again? (y/n) > ").strip().lower()[:1] == "n":
-            break
+        while True:
+            name = input("Player name:\t")
+            colour = input("Player colour:\t")
+            players += [Player(name, colour, TPresenter.TPresenter)]
+            if input("Add another player? (y/n) > ").strip().lower()[:1] == "n":
+                break
+
+        referee = Referee(COLOURS, 4, 9, 2*players[:])
+
+        while True:
+            referee.game()
+            if input("Play again? (y/n) > ").strip().lower()[:1] == "n":
+                break
+    except KeyboardInterrupt:
+        pass

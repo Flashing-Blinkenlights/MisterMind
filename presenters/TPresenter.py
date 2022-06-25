@@ -1,4 +1,5 @@
 from . import BasePresenter
+import os
 
 class TPresenter(BasePresenter):
     """
@@ -47,7 +48,10 @@ class TPresenter(BasePresenter):
         prompt = self.TCOLOURS[self.pcolour].replace("§", "3") \
                 + "\tRound {} for {}: > {}\n\t> ".format(round+1, name, palette)
 
-        return tuple("".join(input(prompt).lower().split()))
+        result = tuple("".join(input(prompt).lower().split()))
+        os.system('cls' if os.name == 'nt' else 'clear')
+
+        return result
 
     def printboard(self, state, pins, rounds):
 
